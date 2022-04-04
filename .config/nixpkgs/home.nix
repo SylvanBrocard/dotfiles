@@ -1,4 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
+
 
 {
   # Home Manager needs a bit of information about you and the
@@ -26,20 +27,34 @@
 
   home.packages = with pkgs;[
      source-code-pro
+     emacs
+     zotero
+     micromamba
   ];
 
   programs.zsh = {
+    initExtraBeforeCompInit = ''
+      # p10k instant prompt
+      P10K_INSTANT_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
+      [[ ! -r "$P10K_INSTANT_PROMPT" ]] || source "$P10K_INSTANT_PROMPT"
+    '';
     enable = true;
-    plugins = [{
-      name = "powerlevel10k";
-      src = pkgs.zsh-powerlevel10k;
-      file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-    }];
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "docker" "docker-compose" "poetry" ];
-      theme = "powerlevel10k/powerlevel10k";
     };
+    plugins = [
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "powerlevel10k-config";
+        src = lib.cleanSource ./p10k-config;
+        file = "p10k.zsh";
+      }
+    ];
   };
 
   programs.git = {
