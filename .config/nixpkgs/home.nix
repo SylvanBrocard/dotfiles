@@ -55,6 +55,24 @@
         file = "p10k.zsh";
       }
     ];
+    initExtra = ''
+      # >>> mamba initialize >>>
+      # !! Contents within this block are managed by 'mamba init' !!
+      export MAMBA_EXE="/nix/store/03gsy3qc996wbrni0lxhrdqm9lfsj6rh-micromamba-0.21.2/bin/micromamba";
+      export MAMBA_ROOT_PREFIX="/home/sylvanbrocard/micromamba";
+      __mamba_setup="$('/nix/store/03gsy3qc996wbrni0lxhrdqm9lfsj6rh-micromamba-0.21.2/bin/micromamba' shell hook --shell zsh --prefix '/home/sylvanbrocard/micromamba' 2> /dev/null)"
+      if [ $? -eq 0 ]; then
+          eval "$__mamba_setup"
+      else
+          if [ -f "/home/sylvanbrocard/micromamba/etc/profile.d/micromamba.sh" ]; then
+              . "/home/sylvanbrocard/micromamba/etc/profile.d/micromamba.sh"
+          else
+              export  PATH="/home/sylvanbrocard/micromamba/bin:$PATH"  # extra space after export prevents interference from conda init
+          fi
+      fi
+      unset __mamba_setup
+      # <<< mamba initialize <<<
+    '';
   };
 
   programs.git = {
