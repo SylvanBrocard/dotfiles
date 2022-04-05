@@ -80,4 +80,11 @@
     userName = "SylvanBrocard";
     userEmail = "sylvan.brocard@gmail.com";
   };
+
+  programs.tmux = {
+    enable = true;
+    plugins = with pkgs; [
+      tmuxPlugins.nord
+    ];
+  };
 }
