@@ -97,7 +97,6 @@
       eamodio.gitlens
       bbenoist.nix
       ms-azuretools.vscode-docker
-      ms-vscode-remote.remote-containers
       davidanson.vscode-markdownlint
     ];
   };
