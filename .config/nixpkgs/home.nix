@@ -30,6 +30,8 @@
      source-code-pro
      zotero
      micromamba
+     emacs
+     firefox
   ];
 
   programs.zsh = {
@@ -99,13 +101,5 @@
       ms-azuretools.vscode-docker
       davidanson.vscode-markdownlint
     ];
-  };
-
-  programs.emacs = {
-    enable = true;
-  };
-
-  programs.firefox = {
-    enable = true;
   };
 }
